@@ -6,4 +6,4 @@ Based on:
 - https://github.com/vlcn-io/vite-starter/
 - https://github.com/quarrant/mobx-persist-store
 
-Demo: https://mobx-persist-vlcn.fly.de
+Demo: https://mobx-persist-vlcn.fly.dev
