@@ -1,7 +1,7 @@
-import App from "./App.tsx";
-import schemaContent from "./schemas/main2.sql?raw";
-import { DBProvider } from "@vlcn.io/react";
 import { useEffect, useState } from "react";
+import { DBProvider } from "@vlcn.io/react";
+import schemaContent from "./schemas/store.sql?raw";
+import { MobxApp } from "./MobxApp.tsx";
 
 /**
  * Generates a random room name to sync with or pulls one from local storage.
@@ -20,36 +20,11 @@ function hashChanged() {
   localStorage.setItem("room", room);
   return room;
 }
+
 const room = hashChanged();
 
-export default function Root() {
-  const [theRoom, setTheRoom] = useState(room);
-  useEffect(() => {
-    const cb = () => {
-      const room = hashChanged();
-      if (room != theRoom) {
-        setTheRoom(room);
-      }
-    };
-    addEventListener("hashchange", cb);
-    return () => {
-      removeEventListener("hashchange", cb);
-    };
-  }, []); // ignore -- theRoom is managed by the effect
-
-  return (
-    <DBProvider
-      dbname={theRoom}
-      schema={{
-        name: "main2.sql",
-        content: schemaContent,
-      }}
-      Render={() => <App dbname={theRoom} />}
-    ></DBProvider>
-  );
-}
-
 type HashBag = { [key: string]: string };
+
 function parseHash(): HashBag {
   const hash = window.location.hash;
   const ret: { [key: string]: string } = {};
@@ -75,4 +50,38 @@ function writeHash(hash: HashBag) {
 
 function newRoom() {
   return crypto.randomUUID().replaceAll("-", "");
+}
+
+const styleLink = document.createElement("link");
+styleLink.rel = "stylesheet";
+styleLink.href =
+  "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
+document.head.appendChild(styleLink);
+
+export default function Root() {
+  const [theRoom, setTheRoom] = useState(room);
+  useEffect(() => {
+    const cb = () => {
+      const room = hashChanged();
+      if (room != theRoom) {
+        setTheRoom(room);
+      }
+    };
+    addEventListener("hashchange", cb);
+    return () => {
+      removeEventListener("hashchange", cb);
+    };
+  }, []); // ignore -- theRoom is managed by the effect
+
+  return (
+    <DBProvider
+      dbname={theRoom}
+      schema={{
+        name: "store.sql",
+        content: schemaContent,
+      }}
+      Render={() => <MobxApp dbName={theRoom}/>}
+    >
+    </DBProvider>
+  );
 }

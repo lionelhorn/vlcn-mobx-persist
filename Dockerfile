@@ -3,7 +3,7 @@ FROM debian:bullseye as builder
 ENV PATH=/usr/local/node/bin:$PATH
 ARG NODE_VERSION=19.0.1
 
-RUN apt-get update; apt install -y curl python-is-python3 pkg-config build-essential && \
+RUN apt-get update; apt install -y unzip curl python-is-python3 pkg-config build-essential && \
     curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
     /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
 rm -rf /tmp/node-build-master

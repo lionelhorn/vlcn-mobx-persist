@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for vite-starter on 2023-06-01T10:35:47-04:00
+# fly.toml app configuration file generated for mobx-persist-vlcn on 2024-01-13T17:34:40+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "vite-starter2"
-primary_region = "iad"
+app = "mobx-persist-vlcn"
+primary_region = "cdg"
 kill_signal = "SIGINT"
 kill_timeout = "5s"
 
