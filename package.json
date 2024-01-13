@@ -1,5 +1,11 @@
 {
   "name": "vlcn-mobx-persist",
+  "keywords": [
+    "vlcn",
+    "sqlite",
+    "mobx-persisted-store",
+    "local-first"
+  ],
   "private": true,
   "version": "0.0.0",
   "type": "module",
